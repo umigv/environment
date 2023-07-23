@@ -17,7 +17,7 @@ This repository will help you get the UMARV environment set up on your computer 
 ## Setup
 First, clone this repository with the following command:
 ```sh
-git clone https://github.com/umigv/environment
+git clone https://github.com/umigv/environment.git
 ```
 Run Docker Desktop and proceed through the initial installation, then open a terminal, navigate to this repository, and run the following commands:
 ```sh
