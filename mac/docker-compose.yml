@@ -12,4 +12,5 @@ services:
       DISPLAY: ${IP}:0
     volumes:
       - /tmp/.X11-unix:/tmp/.X11-unix
+      - ../ws:/home/umarv/ws
     tty: true
