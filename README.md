@@ -15,8 +15,11 @@ This repository will help you get the UMARV environment set up on your computer 
     - [XQuartz](https://www.xquartz.org/)
 
 ## Setup
+First, clone this repository with the following command:
+```sh
+git clone https://github.com/umigv/environment
+```
 Run Docker Desktop and proceed through the initial installation, then open a terminal, navigate to this repository, and run the following commands:
-
 ```sh
 # if using windows:
 cd windows
