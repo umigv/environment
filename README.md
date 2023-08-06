@@ -49,6 +49,7 @@ Should just work as long as you have all the prerequisites. Run your environment
 - Start XQuartz
 - In the menu bar, click `XQuartz` > `Settings`
 - In the window that opens, click `Security`, then check the box that says `Allow connections from network clients`
+- Restart XQuartz
 - Get your IP with `export IP=$(ifconfig en0 | grep inet | awk '$1=="inet" {print $2}')`
 - Allow incoming connections from your ip with `xhost + $IP`
 - Run your environment as normal (starting from `docker compose up`) and try opening a GUI app (e.g. `rqt_graph`)
