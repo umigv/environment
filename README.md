@@ -46,9 +46,12 @@ docker exec -it umarv-ros2 bash
 Should just work as long as you have all the prerequisites. Run your environment as normal and try opening a GUI app (e.g. `rqt_graph`).
 
 ### Mac
-- Go to System Preferences > Security and check the option to allow connections from network clients
-- Restart your computer
-- Start XQuartz (either through Applications folder or with `open -a XQuartz`)
+- Start XQuartz
+- In the menu bar, click `XQuartz` > `Settings`
+- In the window that opens, click `Security`, then check the box that says `Allow connections from network clients`
 - Get your IP with `export IP=$(ifconfig en0 | grep inet | awk '$1=="inet" {print $2}')`
 - Allow incoming connections from your ip with `xhost + $IP`
-- Run your environment as normal and try opening a GUI app (e.g. `rqt_graph`)
+- Run your environment as normal (starting from `docker compose up`) and try opening a GUI app (e.g. `rqt_graph`)
+
+#### Troubleshooting
+- If it says you cannot connect to the X server, make sure you went through all the steps properly and make sure you ran `xhost + $IP` with the proper value of `IP` (you can check this with `echo $IP`). If you still have an issue, you may need to change the display number in `docker-compose.yml`. Run `ps -ef | grep "Xquartz :\d" | grep -v xinit | awk '{ print $9; }'` and you should get an output like `:[number]`. Open `mac/docker-compose.yml` and change the line `DISPLAY: ${IP}:0` to `DISPLAY: ${IP}:[number]`. Then, run everything again and see if it works.
