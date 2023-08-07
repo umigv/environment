@@ -27,6 +27,7 @@ cd windows
 cd mac
 
 docker compose up
+# open a new terminal, then run:
 docker exec -it umarv-ros2 bash
 ```
 The initial container build may take a while. After running the second command, you should see a prompt that looks like this:
