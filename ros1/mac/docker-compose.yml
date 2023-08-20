@@ -1,0 +1,15 @@
+version: '3'
+
+name: umarv-ros1
+
+services:
+  umarv-ros1:
+    container_name: umarv-ros1
+    image: ros-noetic-desktop-full
+    build: ../
+    hostname: umarv-ros1
+    environment:
+      DISPLAY: ${IP}:0
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix
+    tty: true

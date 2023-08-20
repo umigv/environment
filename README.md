@@ -21,25 +21,42 @@ git clone https://github.com/umigv/environment.git
 ```
 Run Docker Desktop and proceed through the initial installation, then open a terminal, navigate to this repository, and run the following commands:
 ```sh
-# if using windows:
+# if you want to use ROS 2 (recommended if you don't specifically need ROS 1):
+cd ros2
+# else if you want to use ROS 1 (only if your subteam requires it):
+cd ros1
+
+# if using windows (make sure you run these commands from a WSL shell):
 cd windows
 # else if using mac:
 cd mac
 
 docker compose up
-# open a new terminal, then run:
+
+# open a new terminal, then run one of the following:
+# if using ROS 2:
 docker exec -it umarv-ros2 bash
+# else if using ROS 1:
+docker exec -it umarv-ros1 bash
 ```
 The initial container build may take a while. After running the second command, you should see a prompt that looks like this:
 
 ```sh
+# ROS 2:
 umarv@umarv-ros2:~$
+
+# ROS 1:
+umarv@umarv-ros1:~$
 ```
 Congratulations! Your environment is now set up. You should be logged in as user `umarv` with password `umarv123`. Remember that if you ever need to run commands as root in the future. If you ever need to open a new terminal and connect back to this instance, just run this command again in a new terminal:
 
 ```sh
+# if using ROS 2:
 docker exec -it umarv-ros2 bash
+# else if using ROS 1:
+docker exec -it umarv-ros1 bash
 ```
+If you need both ROS 1 and ROS 2, just follow the steps again but `cd` into the other directory.
 
 ## Getting GUI apps to work
 
@@ -52,7 +69,9 @@ Should just work as long as you have all the prerequisites. Run your environment
 - In the window that opens, click `Security`, then check the box that says `Allow connections from network clients`
 - Restart XQuartz
 - Get your IP with `export IP=$(ifconfig en0 | grep inet | awk '$1=="inet" {print $2}')`
+    - It is recommended that you add this command to your `.zshrc` file with `echo "export IP=$(ifconfig en0 | grep inet | awk '$1=="inet" {print $2}')" >> ~/.zshrc`
 - Allow incoming connections from your ip with `xhost + $IP`
+- Run `docker compose down` to ensure that any preexisting containers are destroyed
 - Run your environment as normal (starting from `docker compose up`) and try opening a GUI app (e.g. `rqt_graph`)
 
 #### Troubleshooting

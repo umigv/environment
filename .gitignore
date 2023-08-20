@@ -51,9 +51,11 @@ qtcreator-*
 CATKIN_IGNORE
 
 # Colcon output
-build
-install
-log
+build/
+install/
+log/
 
 # Other
-.vscode
+.vscode/
+src/
+!src/README.md
