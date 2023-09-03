@@ -61,7 +61,10 @@ If you need both ROS 1 and ROS 2, just follow the steps again but `cd` into the 
 ## Getting GUI apps to work
 
 ### Windows
-Should just work as long as you have all the prerequisites. Run your environment as normal and try opening a GUI app (e.g. `rqt_graph`).
+For most applications, should just work as long as you have all the prerequisites. Run your environment as normal and try opening a GUI app (e.g. `rqt_graph`).
+
+#### Exceptions:
+- To run `ign gazebo`, you must append `LIBGL_ALWAYS_SOFTWARE=1` to your commands (e.g. `LIBGL_ALWAYS_SOFTWARE=1 ign gazebo`)
 
 ### Mac
 - Start XQuartz

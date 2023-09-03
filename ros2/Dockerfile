@@ -1,12 +1,15 @@
 FROM osrf/ros:humble-desktop-full
 
-ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib/wsl/lib
+ENV LIBVA_DRIVER_NAME=d3d12
+ENV LD_LIBRARY_PATH=/usr/lib/wsl/lib
 
-RUN apt-get update && apt-get install -y software-properties-common
+RUN apt-get update && apt-get install -y software-properties-common curl
 RUN add-apt-repository ppa:kisak/kisak-mesa -y
 
 RUN apt-get upgrade -y && apt-get install -y \
     ros-humble-ros-gz \
+    ros-humble-gazebo-ros \ 
+    vainfo \
     mesa-utils \
     && rm -rf /var/lib/apt/lists/*
 
