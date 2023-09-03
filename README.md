@@ -63,8 +63,8 @@ If you need both ROS 1 and ROS 2, just follow the steps again but `cd` into the 
 ### Windows
 For most applications, should just work as long as you have all the prerequisites. Run your environment as normal and try opening a GUI app (e.g. `rqt_graph`).
 
-#### Exceptions:
-- To run `ign gazebo`, you must append `LIBGL_ALWAYS_SOFTWARE=1` to your commands (e.g. `LIBGL_ALWAYS_SOFTWARE=1 ign gazebo`)
+#### Troubleshooting
+- If you're having trouble running `gazebo` or `ign gazebo` with ROS 2, you can uncomment line 16 in `ros2/windows/docker-compose.yml` which sets the environment variable `LIBGL_ALWAYS_SOFTWARE` to 1, disabling hardware acceleration
 
 ### Mac
 - Start XQuartz
