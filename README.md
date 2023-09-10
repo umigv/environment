@@ -3,23 +3,28 @@
 This repository will help you get the UMARV environment set up on your computer so you can work with ROS and our software stack.
 
 ## Prerequisites
+
 - [Docker Desktop](https://www.docker.com/products/docker-desktop/)
 - ~50 GB of free disk space
 - Windows Users:
-    - [WSL](https://learn.microsoft.com/en-us/windows/wsl/install)
-        - Be sure to install Ubuntu as your distribution (this is the default behavior when running `wsl --install`)
-        - NOTE: Must be on **Windows 10 Build 19044+ or Windows 11** to use GUI apps
-    - [Windows Terminal](https://learn.microsoft.com/en-us/windows/terminal/install)
-        - Highly recommended but not required—can use any terminal emulator
+  - [WSL](https://learn.microsoft.com/en-us/windows/wsl/install)
+    - Be sure to install Ubuntu as your distribution (this is the default behavior when running `wsl --install`)
+    - NOTE: Must be on **Windows 10 Build 19044+ or Windows 11** to use GUI apps
+  - [Windows Terminal](https://learn.microsoft.com/en-us/windows/terminal/install)
+    - Highly recommended but not required—can use any terminal emulator
 - Mac Users:
-    - [XQuartz](https://www.xquartz.org/)
+  - [XQuartz](https://www.xquartz.org/)
 
 ## Setup
+
 First, clone this repository with the following command:
+
 ```sh
 git clone https://github.com/umigv/environment.git
 ```
+
 Run Docker Desktop and proceed through the initial installation, then open a terminal, navigate to this repository, and run the following commands:
+
 ```sh
 # if you want to use ROS 2 (recommended if you don't specifically need ROS 1):
 cd ros2
@@ -39,6 +44,7 @@ docker exec -it umarv-ros2 bash
 # else if using ROS 1:
 docker exec -it umarv-ros1 bash
 ```
+
 The initial container build may take a while. After running the second command, you should see a prompt that looks like this:
 
 ```sh
@@ -48,6 +54,7 @@ umarv@umarv-ros2:~$
 # ROS 1:
 umarv@umarv-ros1:~$
 ```
+
 Congratulations! Your environment is now set up. You should be logged in as user `umarv` with password `umarv123`. Remember that if you ever need to run commands as root in the future. If you ever need to open a new terminal and connect back to this instance, just run this command again in a new terminal:
 
 ```sh
@@ -56,26 +63,63 @@ docker exec -it umarv-ros2 bash
 # else if using ROS 1:
 docker exec -it umarv-ros1 bash
 ```
+
+You can add a function to your `.bashrc` or `.zshrc` file as follows to simplify running the environment:
+
+```sh
+# ROS 2:
+function ros2 {
+  CYAN='\033[0;36m'
+  NC='\033[0m'
+  if [ -n "$(docker ps -f "name=umarv-ros2" -f "status=running" -q)" ]; then
+    docker exec -it umarv-ros2 bash
+  else
+    echo -e "${CYAN}Open a new tab and run ros2 again${NC}"
+    cd [path to environment]/ros2/[windows/mac] # replace first [] with correct path to your environment, e.g. ~/arv/environment and second with your OS
+    docker compose up
+  fi
+}
+
+# ROS 1:
+function ros1 {
+  CYAN='\033[0;36m'
+  NC='\033[0m'
+  if [ -n "$(docker ps -f "name=umarv-ros1" -f "status=running" -q)" ]; then
+    docker exec -it umarv-ros1 bash
+  else
+    echo -e "${CYAN}Open a new tab and run ros1 again${NC}"
+    cd [path to environment]/ros1/[windows/mac] # replace first [] with correct path to your environment, e.g. ~/arv/environment and second with your OS
+    docker compose up
+  fi
+}
+```
+
+Then just run `ros2` or `ros1` to launch the environment.
+
 If you need both ROS 1 and ROS 2, just follow the steps again but `cd` into the other directory.
 
 ## Getting GUI apps to work
 
 ### Windows
+
 For most applications, should just work as long as you have all the prerequisites. Run your environment as normal and try opening a GUI app (e.g. `rqt_graph`).
 
 #### Troubleshooting
+
 - If you're having trouble running `gazebo` or `ign gazebo` with ROS 2, you can uncomment line 16 in `ros2/windows/docker-compose.yml` which sets the environment variable `LIBGL_ALWAYS_SOFTWARE` to 1, disabling hardware acceleration
 
 ### Mac
+
 - Start XQuartz
 - In the menu bar, click `XQuartz` > `Settings`
 - In the window that opens, click `Security`, then check the box that says `Allow connections from network clients`
 - Restart XQuartz
 - Get your IP with `export IP=$(ifconfig en0 | grep inet | awk '$1=="inet" {print $2}')`
-    - It is recommended that you add this command to your `.zshrc` file with `echo "export IP=$(ifconfig en0 | grep inet | awk '$1=="inet" {print $2}')" >> ~/.zshrc`
+  - It is recommended that you add this command to your `.zshrc` file with `echo "export IP=$(ifconfig en0 | grep inet | awk '$1=="inet" {print $2}')" >> ~/.zshrc`
 - Allow incoming connections from your ip with `xhost + $IP`
 - Run `docker compose down` to ensure that any preexisting containers are destroyed
 - Run your environment as normal (starting from `docker compose up`) and try opening a GUI app (e.g. `rqt_graph`)
 
 #### Troubleshooting
+
 - If it says you cannot connect to the X server, make sure you went through all the steps properly and make sure you ran `xhost + $IP` with the proper value of `IP` (you can check this with `echo $IP`). If you still have an issue, you may need to change the display number in `docker-compose.yml`. Run `ps -ef | grep "Xquartz :\d" | grep -v xinit | awk '{ print $9; }'` and you should get an output like `:[number]`. Open `mac/docker-compose.yml` and change the line `DISPLAY: ${IP}:0` to `DISPLAY: ${IP}:[number]`. Then, run everything again and see if it works.
