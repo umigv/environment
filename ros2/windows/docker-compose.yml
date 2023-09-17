@@ -21,6 +21,7 @@ services:
       - ../ws:/home/umarv/ws
     devices:
       - /dev/dxg:/dev/dxg
+      - /dev/ttyUSB0:/dev/ttyUSB0
       # - /dev/dri/card0:/dev/dri/card0
       # - /dev/dri/renderD128:/dev/dri/renderD128
     tty: true

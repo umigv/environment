@@ -100,6 +100,12 @@ Then just run `ros2` or `ros1` to launch the environment.
 
 If you need both ROS 1 and ROS 2, just follow the steps again but `cd` into the other directory.
 
+## Preconfigured Scripts
+
+Run `rosup` inside your container to automatically install the dependencies for your workspace using `rosdep`.
+
+Run `rossrc` inside your container to automatically source your workspace's setup script.
+
 ## VSCode Setup
 
 To use VSCode nicely with the ROS container:
@@ -150,7 +156,7 @@ To connect a USB device to a Windows device:
 
 - Follow [these instructions](https://learn.microsoft.com/en-us/windows/wsl/connect-usb) to connect your device to WSL
 - Run `dmesg | grep usb` and look for a line similar to `[ 1491.421543] usb 1-1: [device] now attached to [location]` (location may look something like `ttyUSB0`)
-- Add a new device to `ros2/windows/docker-compose.yml` in your environment repo linking to this location, then restart ROS (e.g. add `- /dev/ttyUSB0:/dev/ttyUSB0` under `devices:`)
+- Make sure there is a device entry for your device (e.g. `- /dev/ttyUSB0:/dev/ttyUSB0` under `devices:`) in `ros[1 or 2]/windows/docker-compose.yml` in your environment repo, then restart ROS
 - In your ROS container, run `sudo chmod ugo+rw /dev/[location]` to allow access to the device
 
 If you are on Mac, you probably won't be able to easily add a USB device to your Docker container. Instead, try to use one of the team devices like the laptop in order to test your code once you're ready for it

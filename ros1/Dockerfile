@@ -6,7 +6,7 @@ ENV LD_LIBRARY_PATH=/usr/lib/wsl/lib
 RUN apt-get update && apt-get install -y software-properties-common curl
 RUN add-apt-repository ppa:kisak/kisak-mesa -y
 
-RUN apt-get upgrade -y && apt-get install -y \
+RUN apt-get update && apt-get upgrade -y && apt-get install -y \
     ros-noetic-ros-ign \ 
     ros-noetic-rviz-imu-plugin \
     vainfo \ 
@@ -18,5 +18,5 @@ USER umarv
 WORKDIR /home/umarv
 
 RUN echo "source /opt/ros/noetic/setup.bash" >> ~/.bashrc
-RUN echo "alias rosup=rosdep install --from-paths ~/ws/src -y --ignore-src"
-RUN echo "alias rossrc=source ~/ws/install/setup.bash"
+RUN echo "alias rosup='sudo apt update; rosdep update; rosdep install --from-paths ~/ws/src -y --ignore-src'" >> ~/.bashrc
+RUN echo "alias rossrc='source ~/ws/install/setup.bash'" >> ~/.bashrc
