@@ -5,11 +5,13 @@ This repository will help you get the UMARV environment set up on your computer 
 ## Prerequisites
 
 - [Docker Desktop](https://www.docker.com/products/docker-desktop/)
+- [Git](https://git-scm.com/) (preinstalled on most Linux distros)
 - ~50 GB of free disk space
 - Windows Users:
   - [WSL](https://learn.microsoft.com/en-us/windows/wsl/install)
     - Be sure to install Ubuntu as your distribution (this is the default behavior when running `wsl --install`)
     - NOTE: Must be on **Windows 10 Build 19044+ or Windows 11** to use GUI apps
+    - Even if you have WSL already, you should run `wsl --update` just to make sure you have the latest GUI features
   - [Windows Terminal](https://learn.microsoft.com/en-us/windows/terminal/install)
     - Highly recommended but not required—can use any terminal emulator
 - Mac Users:
@@ -17,13 +19,13 @@ This repository will help you get the UMARV environment set up on your computer 
 
 ## Setup
 
-First, clone this repository with the following command:
+First, clone this repository into your Linux/Mac environment with the following command:
 
 ```sh
 git clone https://github.com/umigv/environment.git
 ```
 
-Run Docker Desktop and proceed through the initial installation, then open a terminal, navigate to this repository, and run the following commands:
+Run Docker Desktop and proceed through the initial installation, then open a terminal, navigate to this repository (e.g. `cd ~/environment`, change depending on where you clone it), and run the following commands:
 
 ```sh
 # if you want to use ROS 2 (recommended if you don't specifically need ROS 1):
@@ -64,7 +66,7 @@ docker exec -it umarv-ros2 bash
 docker exec -it umarv-ros1 bash
 ```
 
-You can add a function to your `.bashrc` or `.zshrc` file as follows to simplify running the environment:
+You can add a function to your `.bashrc` or `.zshrc` file as follows to simplify running the environment (make sure to fill in the placeholders and remove the brackets!):
 
 ```sh
 # ROS 2:
@@ -98,13 +100,31 @@ Then just run `ros2` or `ros1` to launch the environment.
 
 If you need both ROS 1 and ROS 2, just follow the steps again but `cd` into the other directory.
 
+## VSCode Setup
+
+To use VSCode nicely with the ROS container:
+
+- Start your ROS container
+- Open VSCode and install the Dev Containers extension if you don't have it already
+- Open the command pallete (ctrl-shift-p on Windows, cmd-shift-p on Mac), choose `Dev Containers: Attach to Running Container`, and choose your ROS container
+  - VSCode should open and in the bottom left corner it should say `Container: ros-humble-desktop-full (umarv-ros-2)` or an equivalent for ROS 1
+- Install the ROS VSCode extension in the container
+- Open your `ws` folder, then open the VSCode settings (UI) and switch to the Workspace tab in settings
+  - Search for `ROS`
+  - For `Ros: Distro`, enter `humble`
+  - For `Ros: Ros Setup Script`, enter `install/setup.bash`
+  - Search for `Terminal › Integrated › Default Profile: Linux` and change the setting to `bash`
+- After adding packages to `ws/src`, run `colcon build`
+
+Your VSCode setup should now work completely with correct syntax highlighting! You should do all of your ROS work in this VSCode instance.
+
 ## Getting GUI apps to work
 
 ### Windows
 
 For most applications, should just work as long as you have all the prerequisites. Run your environment as normal and try opening a GUI app (e.g. `rqt_graph`).
 
-#### Troubleshooting
+#### Windows Troubleshooting
 
 - If you're having trouble running `gazebo` or `ign gazebo` with ROS 2, you can uncomment line 16 in `ros2/windows/docker-compose.yml` which sets the environment variable `LIBGL_ALWAYS_SOFTWARE` to 1, disabling hardware acceleration
 
@@ -120,6 +140,16 @@ For most applications, should just work as long as you have all the prerequisite
 - Run `docker compose down` to ensure that any preexisting containers are destroyed
 - Run your environment as normal (starting from `docker compose up`) and try opening a GUI app (e.g. `rqt_graph`)
 
-#### Troubleshooting
+#### Mac Troubleshooting
 
 - If it says you cannot connect to the X server, make sure you went through all the steps properly and make sure you ran `xhost + $IP` with the proper value of `IP` (you can check this with `echo $IP`). If you still have an issue, you may need to change the display number in `docker-compose.yml`. Run `ps -ef | grep "Xquartz :\d" | grep -v xinit | awk '{ print $9; }'` and you should get an output like `:[number]`. Open `mac/docker-compose.yml` and change the line `DISPLAY: ${IP}:0` to `DISPLAY: ${IP}:[number]`. Then, run everything again and see if it works.
+
+## USB Devices
+
+To connect a USB device to a Windows device:
+
+- Follow [these instructions](https://learn.microsoft.com/en-us/windows/wsl/connect-usb) to connect your device to WSL
+- Run `dmesg | grep usb` and look for a line similar to `[ 1491.421543] usb 1-1: [device] now attached to [location]` (location may look something like `ttyUSB0`)
+- Add a new device to `ros2/windows/docker-compose.yml` in your environment repo linking to this location, then restart ROS (e.g. add `- /dev/ttyUSB0:/dev/ttyUSB0` under `devices:`)
+
+If you are on Mac, you probably won't be able to easily add a USB device to your Docker container. Instead, try to use one of the team devices like the laptop in order to test your code once you're ready for it
