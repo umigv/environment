@@ -116,7 +116,7 @@ To use VSCode nicely with the ROS container:
   - Search for `Terminal › Integrated › Default Profile: Linux` and change the setting to `bash`
 - After adding packages to `ws/src`, run `colcon build`
 
-Your VSCode setup should now work completely with correct syntax highlighting! You should do all of your ROS work in this VSCode instance.
+Your VSCode setup should now work completely with correct syntax highlighting! You should do all of your ROS work in this VSCode instance. You can reopen the instance at any time by opening VSCode and clicking `File > Open Recent > ~/ws [Container: ros-humble-desktop-full (umarv-ros-2)]`
 
 ## Getting GUI apps to work
 
