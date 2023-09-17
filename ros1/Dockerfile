@@ -8,6 +8,7 @@ RUN add-apt-repository ppa:kisak/kisak-mesa -y
 
 RUN apt-get upgrade -y && apt-get install -y \
     ros-noetic-ros-ign \ 
+    ros-noetic-rviz-imu-plugin \
     vainfo \ 
     mesa-utils \
     && rm -rf /var/lib/apt/lists/*
@@ -17,3 +18,5 @@ USER umarv
 WORKDIR /home/umarv
 
 RUN echo "source /opt/ros/noetic/setup.bash" >> ~/.bashrc
+RUN echo "alias rosup=rosdep install --from-paths ~/ws/src -y --ignore-src"
+RUN echo "alias rossrc=source ~/ws/install/setup.bash"
