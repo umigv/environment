@@ -151,5 +151,6 @@ To connect a USB device to a Windows device:
 - Follow [these instructions](https://learn.microsoft.com/en-us/windows/wsl/connect-usb) to connect your device to WSL
 - Run `dmesg | grep usb` and look for a line similar to `[ 1491.421543] usb 1-1: [device] now attached to [location]` (location may look something like `ttyUSB0`)
 - Add a new device to `ros2/windows/docker-compose.yml` in your environment repo linking to this location, then restart ROS (e.g. add `- /dev/ttyUSB0:/dev/ttyUSB0` under `devices:`)
+- In your ROS container, run `sudo chmod ugo+rw /dev/[location]` to allow access to the device
 
 If you are on Mac, you probably won't be able to easily add a USB device to your Docker container. Instead, try to use one of the team devices like the laptop in order to test your code once you're ready for it
