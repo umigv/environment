@@ -139,16 +139,18 @@ For most applications, should just work as long as you have all the prerequisite
 - Start XQuartz
 - In the menu bar, click `XQuartz` > `Settings`
 - In the window that opens, click `Security`, then check the box that says `Allow connections from network clients`
-- Restart XQuartz
-- Get your IP with `export IP=$(ifconfig en0 | grep inet | awk '$1=="inet" {print $2}')`
-  - It is recommended that you add this command to your `.zshrc` file with `echo "export IP=$(ifconfig en0 | grep inet | awk '$1=="inet" {print $2}')" >> ~/.zshrc`
-- Allow incoming connections from your ip with `xhost + $IP`
-- Run `docker compose down` to ensure that any preexisting containers are destroyed
-- Run your environment as normal (starting from `docker compose up`) and try opening a GUI app (e.g. `rqt_graph`)
+- Restart your computer
+- Run all the following in the **same terminal window**:
+  - Get your IP with `export IP=$(ifconfig en0 | grep inet | awk '$1=="inet" {print $2}')`
+    - It is recommended that you add this command to your `.zshrc` file with `echo "export IP=$(ifconfig en0 | grep inet | awk '$1=="inet" {print $2}')" >> ~/.zshrc` since your IP will change anytime your network changes
+  - Allow incoming connections from your ip with `xhost + $IP`
+  - Run `docker compose down` to ensure that any preexisting containers are destroyed
+  - Run your environment as normal (starting from `docker compose up`) and try opening a GUI app (e.g. `rqt_graph`)
+  - Anytime your network changes, make sure to stop your container, update the IP environment variable (preferrably by just opening a new shell with the above command in your `.zshrc`) and restart the container with the `ros1`/`ros2` shortcut functions or by running `docker conpose up` from the correct environment folder
 
 #### Mac Troubleshooting
 
-- If it says you cannot connect to the X server, make sure you went through all the steps properly and make sure you ran `xhost + $IP` with the proper value of `IP` (you can check this with `echo $IP`). If you still have an issue, you may need to change the display number in `docker-compose.yml`. Run `ps -ef | grep "Xquartz :\d" | grep -v xinit | awk '{ print $9; }'` and you should get an output like `:[number]`. Open `mac/docker-compose.yml` and change the line `DISPLAY: ${IP}:0` to `DISPLAY: ${IP}:[number]`. Then, run everything again and see if it works.
+- If it says you cannot connect to the X server, make sure you went through all the steps properly **in the same terminal window** and make sure you ran `xhost + $IP` with the proper value of `IP` (you can check this with `echo $IP`). If you still have an issue, you may need to change the display number in `docker-compose.yml`. Run `ps -ef | grep "Xquartz :\d" | grep -v xinit | awk '{ print $9; }'` and you should get an output like `:[number]`. Open `mac/docker-compose.yml` and change the line `DISPLAY: ${IP}:0` to `DISPLAY: ${IP}:[number]`. Then, run everything again and see if it works.
 
 ## USB Devices
 
