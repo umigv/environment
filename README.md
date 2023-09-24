@@ -143,7 +143,8 @@ For most applications, should just work as long as you have all the prerequisite
 - Run all the following in the **same terminal window**:
   - Get your IP with `export IP=$(ifconfig en0 | grep inet | awk '$1=="inet" {print $2}')`
     - It is recommended that you add this command to your `.zshrc` file with `echo -e "export IP=\$(ifconfig en0 | grep inet | awk '\$1==\"inet\" {print \$2}')" >> ~/.zshrc` since your IP will change anytime your network changes
-  - Allow incoming connections from your ip with `xhost + $IP`
+  - Allow incoming connections from your ip with `xhost + $IP` **while XQuartz is running**
+    - You will have to run this again every time your IP address changes, and since it has to be run while XQuartz is running, there isn't much use in adding it to your `~/.zshrc` file
   - Run `docker compose down` to ensure that any preexisting containers are destroyed
   - Run your environment as normal (starting from `docker compose up`) and try opening a GUI app (e.g. `rqt_graph`)
   - Anytime your network changes, make sure to stop your container, update the IP environment variable (preferrably by just opening a new shell with the above command in your `.zshrc`) and restart the container with the `ros1`/`ros2` shortcut functions or by running `docker conpose up` from the correct environment folder

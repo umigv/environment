@@ -9,6 +9,7 @@ RUN add-apt-repository ppa:kisak/kisak-mesa -y
 RUN apt-get update && apt-get upgrade -y && apt-get install -y \
     ros-noetic-ros-ign \ 
     ros-noetic-rviz-imu-plugin \
+    wget \
     vainfo \ 
     mesa-utils \
     && rm -rf /var/lib/apt/lists/*

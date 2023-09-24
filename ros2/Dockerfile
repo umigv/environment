@@ -10,6 +10,7 @@ RUN apt-get update && apt-get upgrade -y && apt-get install -y \
     ros-humble-ros-gz \
     ros-humble-gazebo-ros \ 
     ros-humble-rviz-imu-plugin \
+    wget \
     vainfo \
     mesa-utils \
     && rm -rf /var/lib/apt/lists/*
