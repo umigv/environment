@@ -142,7 +142,7 @@ For most applications, should just work as long as you have all the prerequisite
 - Restart your computer
 - Run all the following in the **same terminal window**:
   - Get your IP with `export IP=$(ifconfig en0 | grep inet | awk '$1=="inet" {print $2}')`
-    - It is recommended that you add this command to your `.zshrc` file with `echo "export IP=$(ifconfig en0 | grep inet | awk '$1=="inet" {print $2}')" >> ~/.zshrc` since your IP will change anytime your network changes
+    - It is recommended that you add this command to your `.zshrc` file with `echo -e "export IP=\$(ifconfig en0 | grep inet | awk '\$1==\"inet\" {print \$2}')" >> ~/.zshrc` since your IP will change anytime your network changes
   - Allow incoming connections from your ip with `xhost + $IP`
   - Run `docker compose down` to ensure that any preexisting containers are destroyed
   - Run your environment as normal (starting from `docker compose up`) and try opening a GUI app (e.g. `rqt_graph`)
