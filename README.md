@@ -120,9 +120,8 @@ To use VSCode nicely with the ROS container:
   - For `Ros: Distro`, enter `humble` for ROS 2 or `noetic` for ROS 1
   - For `Ros: Ros Setup Script`, enter `install/setup.bash`
   - Search for `Terminal › Integrated › Default Profile: Linux` and change the setting to `bash`
-- After adding packages to `ws/src`, run `colcon build`
 
-Your VSCode setup should now work completely with correct syntax highlighting! You should do all of your ROS work in this VSCode instance. You can reopen the instance at any time by opening VSCode and clicking `File > Open Recent > ~/ws [Container: ros-humble-desktop-full (umarv-ros-2)]`. Make sure your container is running first!
+Your VSCode setup should now work completely with correct syntax highlighting! You should do all of your ROS work in this VSCode instance. You can reopen the instance at any time by opening VSCode and clicking `File > Open Recent > ~/ws [Container: ros-humble-desktop-full (umarv-ros-2)]`. Make sure your container is running first! If you ever notice you don't have intellisense or proper import resolution, you may need to run `colcon build` in your workspace first. VSCode will use the output from `colcon build` to determine how to resolve imports in your code.
 
 ## Getting GUI apps to work
 
