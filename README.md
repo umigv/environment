@@ -38,8 +38,8 @@ cd windows
 # else if using mac:
 cd mac
 
-docker compose up
 # if you are running ubuntu, add sudo before the docker commands. To avoid typing sudo whenever you run the docker commands, follow step 2: https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-20-04
+docker compose up
 
 # open a new terminal, then run one of the following:
 # if using ROS 2:
