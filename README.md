@@ -75,11 +75,17 @@ function ros2 {
   CYAN='\033[0;36m'
   NC='\033[0m'
   if [ -n "$(docker ps -f "name=umarv-ros2" -f "status=running" -q)" ]; then
-    docker exec -it umarv-ros2 bash
+    docker exec -it -e "TERM=xterm-256color" umarv-ros2 bash
   else
-    echo -e "${CYAN}Open a new tab and run ros2 again${NC}"
+    echo -e "${CYAN}Running ROS2 Docker${NC}"
     cd [path to environment]/ros2/[windows/mac] # replace first [] with correct path to your environment, e.g. ~/arv/environment and second with your OS
-    docker compose up
+    docker compose up -d
+    if [ -n "$(docker ps -f "name=umarv-ros2" -f "status=running" -q)" ]; then
+        echo -e "${CYAN}Opening Container${NC}"
+        docker exec -it -e "TERM=xterm-256color" umarv-ros2 bash
+    else
+        echo -e "${CYAN}Could not Open/Find Container${NC}"
+    fi
   fi
 }
 
@@ -88,11 +94,17 @@ function ros1 {
   CYAN='\033[0;36m'
   NC='\033[0m'
   if [ -n "$(docker ps -f "name=umarv-ros1" -f "status=running" -q)" ]; then
-    docker exec -it umarv-ros1 bash
+    docker exec -it -e "TERM=xterm-256color" umarv-ros1 bash
   else
-    echo -e "${CYAN}Open a new tab and run ros1 again${NC}"
+    echo -e "${CYAN}Running ROS1 Docker${NC}"
     cd [path to environment]/ros1/[windows/mac] # replace first [] with correct path to your environment, e.g. ~/arv/environment and second with your OS
-    docker compose up
+    docker compose up -d
+    if [ -n "$(docker ps -f "name=umarv-ros1" -f "status=running" -q)" ]; then
+        echo -e "${CYAN}Opening Container${NC}"
+        docker exec -it -e "TERM=xterm-256color" umarv-ros1 bash
+    else
+        echo -e "${CYAN}Could not Open/Find Container${NC}"
+    fi
   fi
 }
 ```
