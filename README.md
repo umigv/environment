@@ -159,7 +159,7 @@ For most applications, should just work as long as you have all the prerequisite
     - You will have to run this again every time your IP address changes, and since it has to be run while XQuartz is running, there isn't much use in adding it to your `~/.zshrc` file
   - Run `docker compose down` to ensure that any preexisting containers are destroyed
   - Run your environment as normal (starting from `docker compose up`) and try opening a GUI app (e.g. `rqt_graph`)
-  - Anytime your network changes, make sure to stop your container, update the IP environment variable (preferrably by just opening a new shell with the above command in your `.zshrc`) and restart the container with the `ros1`/`ros2` shortcut functions or by running `docker conpose up` from the correct environment folder
+  - Anytime your network changes, make sure to stop your container, update the IP environment variable (preferrably by just opening a new shell with the above command in your `.zshrc`) and restart the container with the `ros1`/`ros2` shortcut functions or by running `docker compose up` from the correct environment folder
 
 #### Mac Troubleshooting
 
